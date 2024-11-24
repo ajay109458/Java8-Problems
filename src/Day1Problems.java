@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
@@ -98,6 +99,101 @@ public class Day1Problems {
         return numbers.parallelStream().reduce(0, Integer::sum);
     }
 
+    /**
+     * Given a list of lists of integers, use flatMap to convert it into a single list of integers.
+     *
+     * Input: [[1, 2], [3, 4], [5]]
+     * Output: [1, 2, 3, 4, 5]
+     */
+    public static List<Integer> flattenedMap(List<List<Integer>> numbers) {
+        return numbers.stream().flatMap(Collection::stream).toList();
+    }
+
+    /**
+     * Create a custom functional interface StringConverter with a method convert(String str). Implement it using a lambda to reverse a string.
+     *
+     * Input: "Java8"
+     * Output: "8avaJ"
+     */
+    public static void functionalInterface() {
+        StringConverter stringConverter = (val) -> new StringBuilder(val).reverse().toString();
+
+        String input = "Java8";
+        String result = stringConverter.convert(input);
+        System.out.println(result);
+    }
+
+    /**
+     * Stream Filtering and Counting
+     * Given a list of integers, use Streams to filter out numbers greater than 10 and count how many such numbers are present.
+     *
+     * Input: [5, 12, 7, 18, 9]
+     * Output: 2
+     */
+    public static long filterAndCount(List<Integer> numbers) {
+        return numbers.stream().filter(num -> num % 2 == 0).count();
+    }
+
+    /**
+     * Sort a list of employees by their salary in descending order using Streams.
+     *
+     * Input:
+     * java
+     * Copy code
+     * List<Employee> employees = Arrays.asList(
+     *     new Employee("John", 5000),
+     *     new Employee("Jane", 6000),
+     *     new Employee("Bob", 4000)
+     * );
+     * Output: Sorted list by salary (highest first).
+     */
+
+    class Employee {
+        String name;
+        int salary;
+
+        public Employee(String name, int salary) {
+            this.name = name;
+            this.salary = salary;
+        }
+    }
+
+    public static List<Employee> sortEmployees(List<Employee> employees) {
+        return employees.stream().sorted((a, b) -> b.salary - a.salary).toList();
+    }
+
+
+    /**
+     * 15. Static Methods in Interfaces
+     * Add a static method to an interface MathUtils that calculates the cube of a number. Demonstrate its usage in a main method.
+     */
+    interface MathUtils {
+        static int cube(int number) {
+            return number * number * number;
+        }
+    }
+
+    /**
+     * 16. Stream Terminal Operations
+     * Use the findFirst() method to retrieve the first element from a list of strings that starts with the letter 'C'.
+     *
+     * Input: ["Apple", "Banana", "Cherry", "Cucumber"]
+     * Output: "Cherry"
+     */
+     public static String firstWithC(List<String> fruits) {
+         return fruits.stream().filter(fruit -> fruit.contains("C")).findFirst().get();
+     }
+
+    /**
+     * 17. Collectors - Joining Strings
+     * Use the Collectors.joining() method to combine a list of strings into a single comma-separated string.
+     *
+     * Input: ["Java", "Python", "C++"]
+     * Output: "Java, Python, C++"
+     */
+     public static String collectorsJoining(List<String> values) {
+         return values.stream().collect(Collectors.joining(","));
+     }
 
 }
 
@@ -109,4 +205,9 @@ interface TestInferface {
     default int square(int a, int b) {
         return a*b;
     }
+}
+
+@FunctionalInterface
+interface StringConverter {
+    public String convert(String input);
 }
